@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #000000 0%, #000000 100%);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
@@ -87,10 +87,11 @@
 .display-container {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding: 2rem;
-    overflow: hidden;
+    overflow: auto;
+    position: relative;
 }
 
 /* Waiting State */
@@ -143,8 +144,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -160,35 +161,32 @@
 }
 
 .large-text {
-    font-size: clamp(3rem, 10vw, 8rem);
-    font-weight: 700;
-    color: white;
-    text-align: center;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 2rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
+    color: #ffffff;
+    text-align: left;
+    text-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    padding: 2rem 2.5rem;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.02),
+        rgba(0, 0, 0, 0.25)
+    );
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
     word-wrap: break-word;
-    max-width: 90%;
-    line-height: 1.2;
+    max-width: 720px;
+    line-height: 1.1;
+    margin: 1.25rem 0 0 1.25rem;
     animation: slideUp 0.6s ease-out;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .large-text.typing {
-    opacity: 0.75;
-    transform: scale(0.98);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.typing-indicator {
-    margin-top: 1.5rem;
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.9);
-    text-align: center;
-    animation: typingPulse 1.5s ease-in-out infinite;
+    opacity: 0.85;
+    transform: scale(0.995);
+    border-color: rgba(255, 255, 255, 0.06);
 }
 
 @keyframes typingPulse {
@@ -235,7 +233,7 @@
     }
 
     .large-text {
-        font-size: clamp(2rem, 8vw, 5rem);
+        font-size: clamp(2.5rem, 9vw, 6rem);
         padding: 1.5rem;
     }
 
@@ -254,7 +252,7 @@
 
 @media (max-width: 480px) {
     .large-text {
-        font-size: clamp(1.5rem, 7vw, 3.5rem);
+        font-size: clamp(2rem, 8.5vw, 5rem);
         padding: 1rem;
     }
 }

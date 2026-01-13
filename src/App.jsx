@@ -21,7 +21,7 @@ function App() {
         backendUrl
     );
 
-    // Join chat room from URL
+    // Join chat room from URL (default to "/1" when none provided)
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const roomIdFromUrl = urlParams.get("room");
@@ -32,9 +32,13 @@ function App() {
             console.log("Joining room:", roomIdFromUrl);
             setTimeout(() => setIsJoiningRoom(false), 1000);
         } else {
-            alert(
-                "No room ID provided! Please open a room URL from the sender app."
-            );
+            const defaultRoom = "1";
+            setIsJoiningRoom(true);
+            setChatId(defaultRoom);
+            console.log("No room provided; defaulting to:", defaultRoom);
+            setTimeout(() => setIsJoiningRoom(false), 1000);
+            const newUrl = `${window.location.origin}${window.location.pathname}?room=${defaultRoom}`;
+            window.history.replaceState({}, "", newUrl);
         }
     }, [backendUrl]);
 
@@ -115,9 +119,7 @@ function App() {
                         >
                             {latestMessageText}
                         </div>
-                        {isDraft && (
-                            <div className="typing-indicator">✍️ typing...</div>
-                        )}
+                        
                     </div>
                 )}
             </main>
