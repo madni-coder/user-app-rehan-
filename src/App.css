@@ -83,6 +83,29 @@
     font-family: "Courier New", monospace;
 }
 
+.room-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.delete-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #ef4444;
+    padding: 0.35rem 0.5rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: rgba(239, 68, 68, 0.06);
+}
+
 /* Display Container */
 .display-container {
     flex: 1;

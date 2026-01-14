@@ -21,7 +21,7 @@ function App() {
         backendUrl
     );
 
-    // Join chat room from URL (default to "/1" when none provided)
+    // Join chat room from URL
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const roomIdFromUrl = urlParams.get("room");
@@ -32,13 +32,9 @@ function App() {
             console.log("Joining room:", roomIdFromUrl);
             setTimeout(() => setIsJoiningRoom(false), 1000);
         } else {
-            const defaultRoom = "1";
-            setIsJoiningRoom(true);
-            setChatId(defaultRoom);
-            console.log("No room provided; defaulting to:", defaultRoom);
-            setTimeout(() => setIsJoiningRoom(false), 1000);
-            const newUrl = `${window.location.origin}${window.location.pathname}?room=${defaultRoom}`;
-            window.history.replaceState({}, "", newUrl);
+            alert(
+                "No room ID provided! Please open a room URL from the sender app."
+            );
         }
     }, [backendUrl]);
 
@@ -51,12 +47,6 @@ function App() {
             latestMessage.type === "connected"
         )
             return;
-
-        if (latestMessage.type === "cleared") {
-            setLatestMessageText("");
-            setIsDraft(false);
-            return;
-        }
 
         // Handle both message structures
         const messageText = latestMessage.message?.text || latestMessage.text;
@@ -72,6 +62,43 @@ function App() {
             setIsDraft(!isFinal);
         }
     }, [latestMessage]);
+
+    // Handle cleared event from server
+    useEffect(() => {
+        if (!latestMessage) return;
+        if (latestMessage.type === "cleared") {
+            clearDisplay();
+        }
+    }, [latestMessage]);
+
+    const clearDisplay = () => {
+        setLatestMessageText("");
+        setIsDraft(false);
+    };
+
+    const handleClearChat = async () => {
+        if (!chatId) return;
+        if (!confirm("Clear all messages for this room?")) return;
+
+        try {
+            const resp = await fetch(`${backendUrl}/chat/${chatId}`, {
+                method: "DELETE",
+            });
+
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => null);
+                console.error("Failed to clear chat", err || resp.statusText);
+                alert("Failed to clear chat");
+                return;
+            }
+
+            clearDisplay();
+            console.log("Chat cleared");
+        } catch (err) {
+            console.error("Error clearing chat", err);
+            alert("Error clearing chat");
+        }
+    };
 
     return (
         <div className="app-container">
@@ -104,6 +131,7 @@ function App() {
                 {chatId && (
                     <div className="room-info">
                         <span className="room-id">Key: {chatId}</span>
+                        
                     </div>
                 )}
             </header>
@@ -125,6 +153,7 @@ function App() {
                         >
                             {latestMessageText}
                         </div>
+                       
                     </div>
                 )}
             </main>
