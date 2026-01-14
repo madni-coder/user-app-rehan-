@@ -52,6 +52,12 @@ function App() {
         )
             return;
 
+        if (latestMessage.type === "cleared") {
+            setLatestMessageText("");
+            setIsDraft(false);
+            return;
+        }
+
         // Handle both message structures
         const messageText = latestMessage.message?.text || latestMessage.text;
         const isFinal =
@@ -119,7 +125,6 @@ function App() {
                         >
                             {latestMessageText}
                         </div>
-                        
                     </div>
                 )}
             </main>
