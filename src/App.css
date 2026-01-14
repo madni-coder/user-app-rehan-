@@ -279,3 +279,23 @@
         padding: 1rem;
     }
 }
+
+/* Center text for web / TV (large screens) */
+@media (min-width: 1024px) {
+    .display-container {
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+    }
+
+    .message-display {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .large-text {
+        margin: 0;
+        text-align: center;
+        max-width: 900px;
+    }
+}
